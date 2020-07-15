@@ -1,0 +1,102 @@
+{%- extends "bootstrap/base.html" -%}
+{%- from 'bootstrap/utils.html' import flashed_messages,icon -%}
+{%- block metas -%}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+{%- endblock metas -%}
+{%- block title -%}
+    {%- if title -%}
+        {{ title }} - TECAON
+    {%- else -%}
+        TECAON
+    {%- endif -%}
+{%- endblock -%}
+{%- block styles -%}
+    {#    {{ super() }}#}
+    <link href="{{ url_for('static',filename='css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static',filename='css/bootstrap-theme.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static',filename='css/main.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static',filename='css/style.css') }}" rel="stylesheet">
+{%- endblock -%}
+{%- block body_attribs %} class="Site"{%- endblock -%}
+{%- block navbar -%}
+    <nav class="navbar  navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="{{ url_for('main.index') }}">TECAON</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li {%- if request.path == url_for('book.index') %} class="active"{%- endif -%} ><a
+                            href="{{ url_for('book.index') }}">Lista de livros</a></li>
+                    {%- if current_user.is_authenticated -%}
+                        {%- if current_user.can(Permission.ADD_BOOK) -%}
+                            <li {%- if request.path == url_for('book.add') %} class="active"{%- endif -%} ><a
+                                    href="{{ url_for('book.add') }}">Adicionar novo livro</a></li>
+                        {%- endif -%}
+                        <li {%- if request.path == url_for('user.index') %} class="active"{%- endif -%} ><a
+                                href="{{ url_for('user.index') }}">Usuários registrados</a></li>
+                        <li {%- if request.path == url_for('log.index') %} class="active"{%- endif -%} ><a
+                                href="{{ url_for('log.index') }}">Emprestismos</a></li>
+                    {%- endif -%}
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    {%- if current_user.is_authenticated -%}
+                        <li {% if request.path == url_for('user.detail',user_id=current_user.id) -%}
+                            class="active"{%- endif -%} >
+                            <a href="{{ url_for('user.detail',user_id=current_user.id) }}">{{ current_user.name }}</a>
+                        </li>
+                        <li>
+                            
+                            <a href="{{ url_for('auth.logout') }}">SAIR</a></li>
+                    {%- else -%}
+                        <li><a href="{{ url_for('auth.login') }}">LOGIN</a></li>
+                    {%- endif -%}
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
+{%- endblock -%}
+
+{%- block content -%}
+<div id="loader-wrapper">
+ 
+  <div id="loader"></div>
+ 
+  <div class="loader-section section-left"></div>
+  <div class="loader-section section-right"></div>
+  
+</div>
+    <main class="container-fluid Site-content">
+        {%- with icon_transform={
+    'success':icon('ok'),
+    'danger':icon('ban-circle'),
+    'info': icon('info-sign'),
+    'warning': icon('alert')} -%}
+            
+        {%- endwith -%}
+        {%- block mycontent -%}{%- endblock -%}
+    </main>
+
+    <footer class="panel panel-inverse">
+        <div id="site-footer-content">
+           
+            <span class="line-wrap">TECAON</a></span>
+        </div>
+    </footer>
+{%- endblock -%}
+
+{%- block scripts -%}
+    <script src="{{ url_for('static',filename='js/jquery-2.2.3.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/script.js') }}"></script>
+{%- endblock scripts -%}

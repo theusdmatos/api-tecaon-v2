@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% from "bootstrap/pagination.html" import render_pagination %}
+{% block mycontent %}
+    <div class="jumbotron">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-1 animated fadeIn">
+                <h1 class="page-header">{{ user.name }}
+                    {% if user.headline %}
+                        <small>{{ user.headline }}</small>
+                    {% endif %}
+
+                </h1>
+
+                <p>Email: {{ user.email }}</p>
+                {% if user.major %}
+                    <p>Major: {{ user.major }}</p>
+                {% endif %}
+                <p>Usuário desde: {{ user.member_since.strftime('%d %B %Y - %H:%M:%S') }}</p>
+         
+             
+
+            </div>
+        </div>
+
+
+        {% if user.about_me_html %}
+            <h2>
+                <small>About</small>
+            </h2>
+            {{ user.about_me_html|safe }}
+        {% elif user.about_me %}
+            <p>{{ user.about_me }}</p>
+        {% endif %}
+
+
+    </div>
+{% endblock %}
+{% block scripts %}
+    {{ super() }}
+    <script>
+        $('[data-toggle="tooltip"]').tooltip()
+    </script>
+{% endblock %}
