@@ -8,3 +8,7 @@ Simple web system developed with the micro framework flask in python, deployed t
 > Flask,
 > SQLite,
 > Heroku
+
+IDE used: Visual Studio Code
+
+Distro used: macOS
