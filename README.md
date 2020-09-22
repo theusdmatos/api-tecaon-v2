@@ -4,7 +4,7 @@
 
 Simple web system developed with the micro framework flask in python, deploy to herokuapp.
 
-> Python
-> Flask
-> SQLite
+> Python,
+> Flask,
+> SQLite,
 > Heroku
